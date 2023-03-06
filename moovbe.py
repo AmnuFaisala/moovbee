@@ -26,13 +26,18 @@ def view_buslist():
     viewobj = Db()
     qry = "SELECT * FROM `bus`"
     viewdtl = viewobj.select(qry)
+    qry2 = "SELECT COUNT(bus_id) as b FROM `bus`"
+    ff=viewobj.selectOne(qry2)
+    if ff is not None:
+        count=ff["b"]
+    else:
+        count=0
+    print(count,ff)
     # print(viewdt1)
     if len(viewdtl) > 0:
-        return jsonify(status="ok",data=viewdtl)
+        return jsonify(status="ok",data=viewdtl,count=count)
     else:
         return jsonify(status="no")
-
-
 
 @app.route('/insert_driver',methods=['POST'])
 def insert_driver():
@@ -49,9 +54,16 @@ def view_driverlist():
     viewobj = Db()
     qry = "SELECT * FROM `driver`"
     viewdtl = viewobj.select(qry)
+    qry2 = "SELECT COUNT(driver_id) as b FROM `driver`"
+    ff = viewobj.selectOne(qry2)
+    if ff is not None:
+        count = ff["b"]
+    else:
+        count = 0
+    print(count, ff)
     # print(viewdt1)
     if len(viewdtl) > 0:
-        return jsonify(status="ok",data=viewdtl)
+        return jsonify(status="ok",data=viewdtl,count=count)
     else:
         return jsonify(status="no")
 
